@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ListModule } from './List/list.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [ListModule],
+  imports: [ListModule, TypeOrmModule.forRoot()],
   controllers: [],
   providers: [],
 })

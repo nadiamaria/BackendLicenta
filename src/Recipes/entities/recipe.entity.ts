@@ -2,14 +2,14 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('recipe')
 export class RecipeEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column('varchar', { length: 500, unique: true })
   name: string;
 
   @Column('varchar', { length: 500 })
-  description: string;
+  image: string;
 
   // @Column('numeric')
   // kcal: number

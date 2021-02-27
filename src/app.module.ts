@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ListModule } from './List/list.module';
+import { RecipeModule } from './Recipes/recipe.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [ListModule, TypeOrmModule.forRoot()],
+  imports: [RecipeModule, TypeOrmModule.forRoot()],
   controllers: [],
   providers: [],
 })

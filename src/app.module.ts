@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
-import { RecipeModule } from './Recipes/recipe.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { IngredientModule } from './Ingredients/ingredient.module';
+import { RecipeIngredient } from './Recipes-Ingredients/models/recipe-ingredient.models';
+import { RecipeModule } from './Recipes/recipe.module';
+
 @Module({
-  imports: [RecipeModule, TypeOrmModule.forRoot()],
+  imports: [
+    RecipeModule,
+    IngredientModule,
+    RecipeIngredient,
+    TypeOrmModule.forRoot(),
+  ],
   controllers: [],
   providers: [],
 })

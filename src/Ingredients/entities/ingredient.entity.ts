@@ -7,7 +7,4 @@ export class IngredientEntity {
 
   @Column('varchar', { length: 500, unique: true })
   name: string;
-
-  @Column('varchar', { length: 500 })
-  image: string;
 }

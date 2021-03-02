@@ -10,4 +10,4 @@ import { IngredientService } from './services/ingredient.service';
   controllers: [IngredientController],
   providers: [IngredientService],
 })
-export class RecipeModule {}
+export class IngredientModule {}

@@ -5,7 +5,4 @@ export class Ingredient {
   @IsString()
   @IsNotEmpty()
   name: string;
-  @IsString()
-  @IsNotEmpty()
-  image: string;
 }

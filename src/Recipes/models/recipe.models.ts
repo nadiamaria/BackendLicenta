@@ -7,5 +7,11 @@ export class Recipe {
   name: string;
   @IsString()
   @IsNotEmpty()
+  //description: string;
+  @IsString()
+  // @IsNotEmpty()
+  instruction: string;
+  @IsString()
+  //@IsNotEmpty()
   image: string;
 }

@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+// import { RecipeIngredient } from 'src/RecipesIngredients/models/recipe-ingredient.models';
 @Entity('recipe')
 export class RecipeEntity {
   @PrimaryGeneratedColumn()
@@ -16,6 +17,12 @@ export class RecipeEntity {
 
   @Column('varchar', { length: 500, unique: true })
   image: string;
+
+  // @OneToMany(
+  //   () => RecipeIngredientEntity,
+  //   (RecipeIngredient) => RecipeIngredient.recipe,
+  // )
+  // RecipeIngredient: RecipeIngredient[];
 
   // @Column('numeric')
   // kcal: number

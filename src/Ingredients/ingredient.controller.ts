@@ -24,7 +24,7 @@ export class IngredientController {
 
   @Get()
   getALL() {
-    return this.ingredientService.getALLReacipes().catch((a) => {
+    return this.ingredientService.getALLIngredients().catch((a) => {
       return a;
     });
   }
@@ -38,14 +38,14 @@ export class IngredientController {
 
   @Get(':id')
   getById(@Param('id', ParseIntPipe) id: number) {
-    return this.ingredientService.getRecipeByID(id).catch((a) => {
+    return this.ingredientService.getIngredientByID(id).catch((a) => {
       return a;
     });
   }
 
   @Post()
   post(@Body(new ValidationPipe()) ingredient: Ingredient) {
-    return this.ingredientService.postRecipe(ingredient);
+    return this.ingredientService.postIngredient(ingredient);
   }
 
   @Put(':id')
@@ -53,11 +53,11 @@ export class IngredientController {
     @Body(new ValidationPipe()) ingredient: Ingredient,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    this.ingredientService.editRecipe(id, ingredient);
+    this.ingredientService.editIngredient(id, ingredient);
   }
 
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
-    this.ingredientService.removeRecipe(id);
+    this.ingredientService.removeIngerdient(id);
   }
 }

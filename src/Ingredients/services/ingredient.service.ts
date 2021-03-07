@@ -14,24 +14,24 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
     super(repo);
   }
 
-  getALLReacipes(): Promise<Ingredient[]> {
+  getALLIngredients(): Promise<Ingredient[]> {
     return this.repo.find();
   }
 
-  getRecipeByID(id: number): Promise<Ingredient> {
+  getIngredientByID(id: number): Promise<Ingredient> {
     const x = this.repo.findOne({ id: id });
     return x;
   }
 
-  postRecipe(recipe: Ingredient): Promise<Ingredient> {
+  postIngredient(recipe: Ingredient): Promise<Ingredient> {
     return this.repo.save(recipe);
   }
 
-  editRecipe(id: number, recipe: Ingredient): void {
+  editIngredient(id: number, recipe: Ingredient): void {
     this.repo.update(id, recipe);
   }
 
-  async removeRecipe(id: number): Promise<void> {
+  async removeIngerdient(id: number): Promise<void> {
     await this.repo.delete(id);
   }
 }

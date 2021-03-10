@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { RecipeIngredientEntity } from '../entities/recipeIngredient.entity';
+import { RecipeIngredientEntity } from '../entities/recipe-ingredient.entity';
 import { RecipeIngredient } from '../models/recipe-ingredient.models';
 
 @Injectable()

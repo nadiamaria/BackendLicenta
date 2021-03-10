@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { RecipeIngredientEntity } from './entities/recipeIngredient.entity';
+import { RecipeIngredientEntity } from './entities/recipe-ingredient.entity';
 import { RecipeIngredientController } from './recipe-ingredient.controller';
 import { RecipeIngredientService } from './services/recipe-ingredient.service';
 
@@ -10,4 +10,4 @@ import { RecipeIngredientService } from './services/recipe-ingredient.service';
   controllers: [RecipeIngredientController],
   providers: [RecipeIngredientService],
 })
-export class RecipeModule {}
+export class RecipeIngredientModule {}

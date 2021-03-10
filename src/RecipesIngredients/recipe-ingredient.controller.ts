@@ -2,11 +2,10 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, ValidationPipe } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 
-import { RecipeIngredientEntity } from './entities/recipeIngredient.entity';
+import { RecipeIngredientEntity } from './entities/recipe-ingredient.entity';
 import { RecipeIngredient } from './models/recipe-ingredient.models';
 import { RecipeIngredientService } from './services/recipe-ingredient.service';
 
-// eslint-disable-next-line prettier/prettier
 @Crud({
   model: {
     type: RecipeIngredientEntity,
@@ -19,13 +18,17 @@ import { RecipeIngredientService } from './services/recipe-ingredient.service';
     },
   },
 })
-@Controller('recipeingredient')
+@Controller('recipeingredientList')
 export class RecipeIngredientController {
-  constructor(public recipeingredientService: RecipeIngredientService) { }
+  constructor(public recipeingredientService: RecipeIngredientService) {}
 
   @Get()
   getALL() {
-    return this.recipeingredientService.getALLReacipesIngredients;
+    return this.recipeingredientService
+      .getALLReacipesIngredients()
+      .catch((a) => {
+        return a;
+      });
   }
 
   // @Get('/name/:name')

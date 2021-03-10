@@ -7,10 +7,4 @@ export class IngredientsCategoryEntity {
 
   @Column('varchar', { length: 500, unique: true })
   category_name: string;
-
-  // @OneToMany(
-  //   () => IngredientEntity,
-  //   (ingredient) => ingredient.ingredientsCategory,
-  // )
-  // ingredient: IngredientEntity[];
 }

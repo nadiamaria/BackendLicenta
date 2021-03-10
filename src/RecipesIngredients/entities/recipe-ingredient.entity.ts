@@ -1,6 +1,13 @@
 import { IngredientEntity } from 'src/Ingredients/entities/ingredient.entity';
 import { RecipeEntity } from 'src/Recipes/entities/recipe.entity';
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('recipeIngredient')
 export class RecipeIngredientEntity {
@@ -13,21 +20,23 @@ export class RecipeIngredientEntity {
   @Column()
   cant_ingr: string;
 
-  @ManyToMany(() => IngredientEntity)
-  @JoinTable()
-  ingredient: IngredientEntity[];
+  // @Column()
+  // ingredient_id: number;
 
-  @OneToOne(() => RecipeEntity)
-  @JoinColumn()
+  // @Column()
+  // recipe_id: number;
+
+  @ManyToOne(() => IngredientEntity, (ingredient) => ingredient.id)
+  // @JoinColumn({
+  //   name: 'ingredient_id',
+  //   referencedColumnName: 'ingredient_id',
+  // })
+  ingredient: IngredientEntity;
+
+  @OneToOne(() => RecipeEntity, (recipe) => recipe.id)
+  // @JoinColumn({
+  //   name: 'recipe_id',
+  //   referencedColumnName: 'recipe_id',
+  // })
   recipe: RecipeEntity;
-  // @ManyToOne(() => RecipeEntity, (recipe) => recipe.id)
-
-  // // @JoinColumn({ name: 'id', referencedColumnName: 'id' })
-  // recipe: Recipe;
-
-  // @ManyToMany(
-  //   () => IngredientEntity,
-  //   (ingredient) => ingredient.recipeIngredient,
-  // )
-  // ingredient: IngredientEntity[];
 }

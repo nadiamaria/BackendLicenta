@@ -5,4 +5,6 @@ export class Ingredient {
   @IsString()
   @IsNotEmpty()
   name: string;
+  @IsNotEmpty()
+  ingredientsCategoryId: number;
 }

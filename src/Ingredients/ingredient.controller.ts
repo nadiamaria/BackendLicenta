@@ -44,13 +44,13 @@ export class IngredientController {
   }
 
   @Post()
-  post(@Body(new ValidationPipe()) ingredient: Ingredient) {
+  post(@Body(new ValidationPipe()) ingredient: IngredientEntity) {
     return this.ingredientService.postIngredient(ingredient);
   }
 
   @Put(':id')
   put(
-    @Body(new ValidationPipe()) ingredient: Ingredient,
+    @Body(new ValidationPipe()) ingredient: IngredientEntity,
     @Param('id', ParseIntPipe) id: number,
   ) {
     this.ingredientService.editIngredient(id, ingredient);
@@ -59,5 +59,15 @@ export class IngredientController {
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     this.ingredientService.removeIngerdient(id);
+  }
+
+  // @Get('/category/:id')
+  // getCategory(@Body('id', ParseIntPipe) id: number) {
+  //   return this.ingredientService.getIngredientCategory(id);
+  // }
+
+  @Get('category')
+  async getCategory(@Body('id', ParseIntPipe) id: number) {
+    return this.ingredientService.getIngredientCategory(id);
   }
 }

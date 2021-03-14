@@ -1,5 +1,11 @@
 import { IngredientsCategoryEntity } from 'src/IngredientsCategory/entities/ingredients-category.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('ingredient')
 export class IngredientEntity {
@@ -9,15 +15,14 @@ export class IngredientEntity {
   @Column('varchar', { length: 500, unique: true })
   name: string;
 
+  @Column({ nullable: false })
+  ingredientCategoryId: number;
+
   @ManyToOne(
     () => IngredientsCategoryEntity,
-    (ingredientsCategory) => ingredientsCategory.id,
+    (ingredientsCategory) => ingredientsCategory.ingredient,
+    { eager: true },
   )
+  @JoinColumn({ name: 'ingredientCategoryId', referencedColumnName: 'id' })
   ingredientsCategory: IngredientsCategoryEntity;
-
-  // @ManyToOne(
-  //   () => IngredientsCategoryEntity,
-  //   (ingredientsCategory) => ingredientsCategory.ingredient,
-  // )
-  // ingredientsCategory: IngredientsCategoryEntity;
 }

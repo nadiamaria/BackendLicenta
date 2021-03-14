@@ -1,16 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
-import { IngredientsCategoryEntity } from 'src/IngredientsCategory/entities/ingredients-category.entity';
 
 import { IngredientEntity } from '../entities/ingredient.entity';
-import { Ingredient } from '../models/ingredient.models';
 
 @Injectable()
 export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
-  // public findAll(): Observable<RecipeModel[]> {
-  //   return of(MockedRecipes);
-  // }
   constructor(@InjectRepository(IngredientEntity) repo) {
     super(repo);
   }
@@ -39,7 +34,7 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
   async getIngredientCategory(id: number): Promise<any> {
     const ingredient: IngredientEntity = await this.repo.findOne({
       where: { id: id },
-      relations: ['category'],
+      relations: ['ingredientsCategory'],
     });
     return ingredient.ingredientsCategory;
   }

@@ -3,7 +3,6 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Validati
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 
 import { IngredientEntity } from './entities/ingredient.entity';
-import { Ingredient } from './models/ingredient.models';
 import { IngredientService } from './services/ingredient.service';
 
 @Crud({
@@ -61,13 +60,8 @@ export class IngredientController {
     this.ingredientService.removeIngerdient(id);
   }
 
-  // @Get('/category/:id')
-  // getCategory(@Body('id', ParseIntPipe) id: number) {
-  //   return this.ingredientService.getIngredientCategory(id);
-  // }
-
-  @Get('category')
-  async getCategory(@Body('id', ParseIntPipe) id: number) {
+  @Get('/:id/ingredientsCategoryList')
+  async getCategory(@Param('id', ParseIntPipe) id: number) {
     return this.ingredientService.getIngredientCategory(id);
   }
 }

@@ -18,7 +18,7 @@ import { RecipeIngredientService } from './services/recipe-ingredient.service';
     },
   },
 })
-@Controller('recipeingredientList')
+@Controller('recipeIngredientList')
 export class RecipeIngredientController {
   constructor(public recipeingredientService: RecipeIngredientService) {}
 
@@ -48,16 +48,16 @@ export class RecipeIngredientController {
   }
 
   @Post()
-  post(@Body(new ValidationPipe()) recipe: RecipeIngredient) {
-    return this.recipeingredientService.postRecipeIngredient(recipe);
+  post(@Body(new ValidationPipe()) recipeIngredient: RecipeIngredientEntity) {
+    return this.recipeingredientService.postRecipeIngredient(recipeIngredient);
   }
 
   @Put(':id')
   put(
-    @Body(new ValidationPipe()) recipe: RecipeIngredient,
+    @Body(new ValidationPipe()) recipeIngredient: RecipeIngredientEntity,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    this.recipeingredientService.editRecipeIngredient(id, recipe);
+    this.recipeingredientService.editRecipeIngredient(id, recipeIngredient);
   }
 
   @Delete(':id')

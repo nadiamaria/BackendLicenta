@@ -26,7 +26,7 @@ import { RecipeService } from './services/recipe.service';
     },
   },
 })
-@Controller('list')
+@Controller('recipeList')
 export class RecipeController {
   constructor(public recipeService: RecipeService) {}
 

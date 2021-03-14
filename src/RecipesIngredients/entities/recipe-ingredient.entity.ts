@@ -18,11 +18,31 @@ export class RecipeIngredientEntity {
   unit_mas: string;
 
   @Column()
-  cant_ingr: string;
+  cant_ingr: number;
 
-  @ManyToOne(() => IngredientEntity, (ingredient) => ingredient.id)
+  @Column({ nullable: false })
+  ingredientId: number;
+
+  @Column({ nullable: false })
+  recipeId: number;
+
+  @ManyToOne(
+    () => IngredientEntity,
+    (ingredient) => ingredient.recipeIngredient,
+    { eager: true },
+  )
+  @JoinColumn({ name: 'ingredientId', referencedColumnName: 'id' })
   ingredient: IngredientEntity;
 
-  @OneToOne(() => RecipeEntity, (recipe) => recipe.id)
+  @OneToOne(() => RecipeEntity, (recipe) => recipe.recipeIngredient, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'recipeId', referencedColumnName: 'id' })
   recipe: RecipeEntity;
+
+  // @ManyToOne(() => IngredientEntity, (ingredient) => ingredient.id)
+  // ingredient: IngredientEntity;
+
+  // @OneToOne(() => RecipeEntity, (recipe) => recipe.id)
+  // recipe: RecipeEntity;
 }

@@ -1,9 +1,11 @@
 import { IngredientsCategoryEntity } from 'src/IngredientsCategory/entities/ingredients-category.entity';
+import { RecipeIngredientEntity } from 'src/RecipesIngredients/entities/recipe-ingredient.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -25,4 +27,10 @@ export class IngredientEntity {
   )
   @JoinColumn({ name: 'ingredientCategoryId', referencedColumnName: 'id' })
   ingredientsCategory: IngredientsCategoryEntity;
+
+  @OneToMany(
+    () => RecipeIngredientEntity,
+    (recipeIngredient) => recipeIngredient.ingredient,
+  )
+  recipeIngredient: RecipeIngredientEntity[];
 }

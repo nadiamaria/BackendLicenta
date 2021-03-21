@@ -1,8 +1,11 @@
 import { FavoriteEntity } from 'src/Favorites/entities/favorite.entity';
+import { RecipeCategoryEntity } from 'src/RecipesCategory/entities/recipe-category.entity';
 import { RecipeIngredientEntity } from 'src/RecipesIngredients/entities/recipe-ingredient.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -23,6 +26,17 @@ export class RecipeEntity {
 
   @Column('varchar', { length: 500, unique: true })
   image: string;
+
+  @Column({ nullable: false })
+  recipeCategoryId: number;
+
+  @ManyToOne(
+    () => RecipeCategoryEntity,
+    (recipeCategory) => recipeCategory.recipe,
+    { eager: true },
+  )
+  @JoinColumn({ name: 'recipeCategoryId', referencedColumnName: 'id' })
+  recipeCategory: RecipeCategoryEntity;
 
   @OneToOne(
     () => RecipeIngredientEntity,

@@ -1,5 +1,12 @@
+import { FavoriteEntity } from 'src/Favorites/entities/favorite.entity';
 import { RecipeIngredientEntity } from 'src/RecipesIngredients/entities/recipe-ingredient.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 @Entity('recipe')
 export class RecipeEntity {
   @PrimaryGeneratedColumn()
@@ -22,4 +29,7 @@ export class RecipeEntity {
     (recipeIngredient) => recipeIngredient.recipe,
   )
   recipeIngredient: RecipeIngredientEntity;
+
+  @OneToMany(() => FavoriteEntity, (favorite) => favorite.recipe)
+  favorite: FavoriteEntity[];
 }

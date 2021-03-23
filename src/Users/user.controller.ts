@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 import { UserEntity } from './entities/user.entity';
+import { User } from './models/user.models';
 import { UserService } from './services/user.service';
 
 @Crud({
@@ -27,7 +28,19 @@ import { UserService } from './services/user.service';
 })
 @Controller('userList')
 export class UserController {
+  newusers: string[] = [];
   constructor(public userService: UserService) {}
+
+  // @Post()
+  // post(@Body(new ValidationPipe()) user: UserEntity) {
+  //   // return this.userService.postUser(user);
+  //   this.create(user);
+  // }
+
+  @Post()
+  post(@Body() user: UserEntity) {
+    return this.userService.create(user);
+  }
 
   @Get()
   getALL() {
@@ -43,10 +56,10 @@ export class UserController {
     });
   }
 
-  @Post()
-  post(@Body(new ValidationPipe()) user: UserEntity) {
-    return this.userService.postUser(user);
-  }
+  // @Post()
+  // post(@Body(new ValidationPipe()) user: UserEntity) {
+  //   return this.userService.postUser(user);
+  // }
 
   @Put(':id')
   put(
@@ -60,4 +73,14 @@ export class UserController {
   delete(@Param('id', ParseIntPipe) id: number) {
     this.userService.removeUser(id);
   }
+  newUser: UserEntity;
+
+  // @Post()
+  // post(@Body(new ValidationPipe()) user: User) {
+  //   // this.newUser.username = user.username;
+  //   // this.newUser.password = user.password;
+  //   // this.newUser.email = user.email;
+  //   // return this.userService.postUser(this.newUser);
+  //   return this.userService.postUser(user);
+  // }
 }

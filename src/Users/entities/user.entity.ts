@@ -6,23 +6,23 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 30, unique: true })
+  @Column('varchar', { length: 30, unique: true, nullable: false })
   username: string;
 
-  @Column('varchar', { length: 50 })
-  parola: string;
+  @Column('varchar', { length: 50, unique: true, nullable: false })
+  password: string;
 
-  @Column('varchar', { length: 50 })
-  nume: string;
-
-  @Column('varchar', { length: 50 })
-  prenume: string;
-
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, nullable: false })
   email: string;
 
-  @Column('varchar', { length: 50, unique: true })
-  poza: string;
+  // @Column('varchar', { length: 50, nullable: true })
+  // nume: string;
+
+  // @Column('varchar', { length: 50, nullable: true })
+  // prenume: string;
+
+  // @Column('varchar', { length: 50, unique: true, nullable: true })
+  // poza: string;
 
   @OneToMany(() => FavoriteEntity, (favorite) => favorite.user)
   favorite: FavoriteEntity[];

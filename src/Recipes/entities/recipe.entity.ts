@@ -18,7 +18,7 @@ export class RecipeEntity {
   @Column('varchar', { length: 50, unique: true })
   name: string;
 
-  @Column('varchar', { length: 500 })
+  @Column('varchar', { length: 500, nullable: true })
   description: string;
 
   @Column('varchar', { length: 4000 })

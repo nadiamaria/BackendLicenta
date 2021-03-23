@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { UserEntity } from '../entities/user.entity';
+import { User } from '../models/user.models';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
@@ -28,5 +29,9 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   async removeUser(id: number): Promise<void> {
     await this.repo.delete(id);
+  }
+
+  async create(user: UserEntity): Promise<any> {
+    return await this.repo.save(user);
   }
 }

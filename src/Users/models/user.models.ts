@@ -1,17 +1,13 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class User {
-  id: number;
   @IsString()
   @IsNotEmpty()
-  name: string;
+  username: string;
   @IsString()
   @IsNotEmpty()
-  //description: string;
+  password: string;
   @IsString()
-  // @IsNotEmpty()
-  instruction: string;
-  @IsString()
-  //@IsNotEmpty()
-  image: string;
+  @IsNotEmpty()
+  email: string;
 }

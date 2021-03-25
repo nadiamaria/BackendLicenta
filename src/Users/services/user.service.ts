@@ -19,6 +19,16 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return x;
   }
 
+  // async getUser(options?: any): Promise<User> {
+  //   // const user = await this.repo.findOne(options);
+  //   // return toUserDto(user);
+
+  //   const myUser = await this.repo
+  //     .createQueryBuilder('user')
+  //     .where('user.username = :id OR user.password = :name', { id: 1, name: 'Timber' })
+  //     .getOne();
+  // }
+
   postUser(user: UserEntity): Promise<UserEntity> {
     return this.repo.save(user);
   }
@@ -35,3 +45,9 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return await this.repo.save(user);
   }
 }
+
+export const toUserDto = (data: UserEntity): User => {
+  const { id, username, password } = data;
+  const user: User = { id, username, password };
+  return user;
+};

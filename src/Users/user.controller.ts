@@ -83,4 +83,23 @@ export class UserController {
   //   // return this.userService.postUser(this.newUser);
   //   return this.userService.postUser(user);
   // }
+
+  //   @Get("user")
+  //   async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {
+  //     const user = await this.userRepo.findOne({ where: { username } });
+
+  //     if (!user) {
+  //         throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+  //     }
+
+  //     // compare passwords
+  //     const areEqual = await comparePasswords(user.password, password);
+
+  //     if (!areEqual) {
+  //         throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+  //     }
+
+  //     return toUserDto(user);
+  // }
+  // }
 }

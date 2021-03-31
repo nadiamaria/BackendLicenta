@@ -15,7 +15,7 @@ export class RecipeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 50, unique: true })
+  @Column('varchar', { length: 50 })
   name: string;
 
   @Column('varchar', { length: 500, nullable: true })
@@ -24,7 +24,7 @@ export class RecipeEntity {
   @Column('varchar', { length: 4000 })
   instruction: string;
 
-  @Column('varchar', { length: 500, unique: true })
+  @Column('varchar', { length: 500 })
   image: string;
 
   @Column({ nullable: false })

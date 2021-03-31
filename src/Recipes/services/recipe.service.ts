@@ -22,7 +22,24 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     return x;
   }
 
-  postRecipe(recipe: Recipe): Promise<Recipe> {
+  async getRecipeByParams(value: string): Promise<any> {
+    const filter = value.split(', ');
+    const x = await this.repo.find({
+      join: {
+        alias: 'recipe',
+        innerJoin: {
+          recipeIngredient: 'recipe.recipeIngredient',
+        },
+      },
+      where: { name: filter[0], description: filter[1] },
+    });
+    return x;
+    // const x = this.repo.find({ where: { nume: value } });
+    // return x;
+    //http://localhost:3000/recipes?ingredients=rice
+  }
+
+  postRecipe(recipe: RecipeEntity): Promise<RecipeEntity> {
     return this.repo.save(recipe);
   }
 

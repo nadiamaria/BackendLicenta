@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseArrayPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -26,20 +27,34 @@ import { RecipeService } from './services/recipe.service';
     },
   },
 })
-@Controller('recipeList')
+@Controller('recipes') //la plural fara list
 export class RecipeController {
   constructor(public recipeService: RecipeService) {}
 
   @Get()
-  getALL() {
-    return this.recipeService.getALLReacipes().catch((a) => {
-      return a;
-    });
+  getALL(@Param('ingredients') ingredients: string) {
+    if (ingredients) {
+      return this.recipeService.getRecipeByParams(ingredients).catch((a) => {
+        return a;
+      });
+    } else {
+      return this.recipeService.getALLReacipes().catch((a) => {
+        return a;
+      });
+    }
   }
 
   // @Get('/name/:name')
   // getByName(@Param('name') name: string) {
   //   return this.recipeService.getRecipeByName(name).catch((a) => {
+  //     return a;
+  //   });
+  // }
+
+  // @Get('/search?ingredients=:id')
+  // @Get() //in engleza
+  // getByIngredients(@Param('name') name: string) {
+  //   return this.recipeService.getRecipeByParams(name).catch((a) => {
   //     return a;
   //   });
   // }
@@ -52,7 +67,7 @@ export class RecipeController {
   }
 
   @Post()
-  post(@Body(new ValidationPipe()) recipe: Recipe) {
+  post(@Body(new ValidationPipe()) recipe: RecipeEntity) {
     return this.recipeService.postRecipe(recipe);
   }
 

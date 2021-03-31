@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RecipeEntity } from '../entities/recipe.entity';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Recipe } from '../models/recipe.models';
+import { Logger } from '@nestjs/common';
 
 @Injectable()
 export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
@@ -22,13 +23,21 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     return x;
   }
 
-  async getRecipeByParams(value: string): Promise<any> {
-    const filter = value.split(', ');
-    const x = await this.repo.createQueryBuilder('recipe')
-    .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
-    .innerJoin('recipeIngredient.ingredient', 'ingredient')
-    .where( 'ingredient.name = :name', {name: filter[0]});
-    
+  async getRecipeByParams(value?: string): Promise<any> {
+    // if(value) {
+    //   return this.repo.find();}
+    // else {
+      let x = await this.repo.createQueryBuilder('recipe')
+      .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
+      .innerJoin('recipeIngredient.ingredient', 'ingredient');
+      if(value)
+        // const filter = value.split(',');
+        // x = x.where( 'ingredient.name = :name', {name: filter[0]});
+        x = x.where( 'ingredient.name = :name', {name: value});
+
+      return x.select(['recipe']).getMany();
+
+
     // .where( 'recipeIngredient.id' == 'recipe.recipeIngredientId')
 
     // const x = await this.repo.find({
@@ -42,7 +51,7 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     //   },
     //   where: { ingredient.name: filter[0] },
     // });
-    return x;
+    
     // const x = this.repo.find({ where: { nume: value } });
     // return x;
     //http://localhost:3000/recipes?ingredients=rice,pui

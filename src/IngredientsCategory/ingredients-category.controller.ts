@@ -18,7 +18,7 @@ import { IngredientsCategoryService } from './services/ingredients-category.serv
     },
   },
 })
-@Controller('ingredientsCategoryList')
+@Controller('ingredientsCategorys')
 export class IngredientsCategoryController {
   constructor(public ingredientsCategoryService: IngredientsCategoryService) {}
 

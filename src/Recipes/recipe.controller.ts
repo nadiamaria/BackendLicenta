@@ -17,7 +17,6 @@ import { Recipe } from './models/recipe.models';
 import { RecipeService } from './services/recipe.service';
 import { Logger } from '@nestjs/common';
 
-
 @Crud({
   model: {
     type: RecipeEntity,
@@ -42,9 +41,9 @@ export class RecipeController {
     // if (ingredients) {
     Logger.log('eu');
 
-      return this.recipeService.getRecipeByParams(ingredients).catch((a) => {
-        return a;
-      });
+    return this.recipeService.getRecipeByParams(ingredients).catch((a) => {
+      return a;
+    });
     // } else {
     // Logger.log('tu');
 

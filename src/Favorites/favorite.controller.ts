@@ -17,7 +17,7 @@ import { FavoriteService } from './services/favorite.service';
     },
   },
 })
-@Controller('favoriteList')
+@Controller('favorites')
 export class FavoriteController {
   constructor(public favoriteService: FavoriteService) {}
 

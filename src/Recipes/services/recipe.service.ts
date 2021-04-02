@@ -24,21 +24,17 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
   }
 
   async getRecipeByParams(value?: string): Promise<any> {
-    // if(value) {
-    //   return this.repo.find();}
-    // else {
-      let x = await this.repo.createQueryBuilder('recipe')
+    let x = this.repo
+      .createQueryBuilder('recipe')
       .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
-      if(value)
-        // const filter = value.split(',');
-        // x = x.where( 'ingredient.name = :name', {name: filter[0]});
-        x = x.where( 'ingredient.name = :name', {name: value});
-
-      return x.select(['recipe']).getMany();
-
-
-    // .where( 'recipeIngredient.id' == 'recipe.recipeIngredientId')
+    if (value) {
+      const filter = value.split(',');
+      x = x.orWhere('ingredient.name = :name', { name: filter[0] });
+      for (let i = 1; i < filter.length; i++)
+        x = x.orWhere('ingredient.name = :name', { name: filter[i] });
+    }
+    return x.select(['recipe']).getMany();
 
     // const x = await this.repo.find({
     //   join: {
@@ -51,7 +47,7 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     //   },
     //   where: { ingredient.name: filter[0] },
     // });
-    
+
     // const x = this.repo.find({ where: { nume: value } });
     // return x;
     //http://localhost:3000/recipes?ingredients=rice,pui

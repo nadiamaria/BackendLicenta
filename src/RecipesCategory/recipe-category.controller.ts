@@ -17,7 +17,7 @@ import { RecipeCategoryService } from './services/recipe-category.service';
     },
   },
 })
-@Controller('recipeCategoryList')
+@Controller('recipeCategorys')
 export class RecipeCategoryController {
   constructor(public recipeCategoryService: RecipeCategoryService) {}
 

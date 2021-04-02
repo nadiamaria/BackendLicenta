@@ -26,7 +26,7 @@ import { UserService } from './services/user.service';
     },
   },
 })
-@Controller('userList')
+@Controller('users')
 export class UserController {
   newusers: string[] = [];
   constructor(public userService: UserService) {}

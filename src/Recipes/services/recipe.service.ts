@@ -30,9 +30,7 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
     if (value) {
       const filter = value.split(',');
-      x = x.orWhere('ingredient.name = :name', { name: filter[0] });
-      for (let i = 1; i < filter.length; i++)
-        x = x.orWhere('ingredient.name = :name', { name: filter[i] });
+      x=x.where('ingredient.name IN (:...ingredients)', { ingredients: filter});
     }
     return x.select(['recipe']).getMany();
 

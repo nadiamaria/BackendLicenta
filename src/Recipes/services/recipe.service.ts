@@ -4,6 +4,9 @@ import { RecipeEntity } from '../entities/recipe.entity';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Recipe } from '../models/recipe.models';
 import { Logger } from '@nestjs/common';
+import * as _ from 'lodash';
+import { Recipe_ingredients } from '../models/recipe_ingredients.models';
+
 
 @Injectable()
 export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
@@ -23,28 +26,48 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     return x;
   }
 
-  async getRecipeByParams(value?: string): Promise<any> {
-    let x = this.repo
+  async getRecipeByParams(ingredients?: string, category?: string): Promise<any> {
+    let query = this.repo
       .createQueryBuilder('recipe')
       .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
-    if (value) {
-      const filter = value.split(',');
-      // x = x.where('ingredient.name IN (:...ingredients)', {
+    if (category) {
+    Logger.log(category);
+
+      query =  query.innerJoin('recipe.recipeCategory', 'recipeCategory');
+      query = query.andWhere('recipeCategory.category_name = :category_name', {category_name : category});
+    }
+    if (ingredients) {
+      const filter = ingredients.split(',');
+      query = query.andWhere(qb => {
+        const subQuery = qb.subQuery()
+        .select('recipe_2.id')
+        .from('recipe', 'recipe_2')
+        .innerJoin('recipe_2.recipeIngredient', 'recipeIngredient_2')
+        .innerJoin('recipeIngredient_2.ingredient', 'ingredient_2')
+        .where('recipe_2.id = recipe.id AND ingredient_2.name IN (:...ingredients)', { 
+          ingredients: filter,
+        })
+        .groupBy('recipe_2.id')
+        .andHaving('COUNT(1) = :filter_length', { filter_length : filter.length })
+        .getQuery();
+        return 'recipe.id IN ' + subQuery;
+      });
+      // query = query.where('ingredient.name IN (:...ingredients)', { 
       //   ingredients: filter,
       // });
-      Logger.log(filter);
-      Logger.log(filter[0]);
-      Logger.log(filter.length);
-      x = x.where('ingredient.name = :ingredient', { ingredient: filter[0] });
-      for (let i = 0; i < filter.length; i++) {
-        Logger.log(filter[i]);
-        x = x.andWhere('ingredient.name = :ingredient', {
-          ingredient: filter[i],
-        });
-      }
+      // // query = query.addSelect('COUNT(1) AS IngredientsNumber');
+      // query = query.groupBy('recipe.id')
+      // .andHaving('COUNT(1) = :filter_length', { filter_length : filter.length });
+      // // .where('IngredientsNumber > :filter_length', { filter_length : filter.length });
+      const result = await query.select(['recipe','ingredient']).getRawMany();
+      return _(result)
+      .groupBy('recipe_id')
+      .map((value, key) => new Recipe_ingredients(key, value))
+      .value();
     }
-    return x.select(['recipe']).getMany();
+
+    return query.select(['recipe']).getMany();
 
     // const x = await this.repo.find({
     //   join: {

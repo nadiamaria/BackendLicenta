@@ -20,15 +20,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js ",
-
     "typeorm:sync": "npm run typeorm schema:sync",
-
     "typeorm:create": "npm run typeorm migration:create -- -n",
-
     "typeorm:migrate": "npm run typeorm migration:generate -- -n",
-
     "typeorm:run": "npm run typeorm migration:run",
-
     "typeorm:revert": "npm run typeorm migration:revert"
   },
   "dependencies": {
@@ -42,6 +37,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "fastify-swagger": "^3.5.0",
+    "lodash": "^4.17.21",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

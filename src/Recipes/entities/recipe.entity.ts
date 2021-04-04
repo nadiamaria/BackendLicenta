@@ -38,11 +38,17 @@ export class RecipeEntity {
   @JoinColumn({ name: 'recipeCategoryId', referencedColumnName: 'id' })
   recipeCategory: RecipeCategoryEntity;
 
-  @OneToOne(
+  // @OneToOne(
+  //   () => RecipeIngredientEntity,
+  //   (recipeIngredient) => recipeIngredient.recipe,
+  // )
+  // recipeIngredient: RecipeIngredientEntity;
+
+  @OneToMany(
     () => RecipeIngredientEntity,
     (recipeIngredient) => recipeIngredient.recipe,
   )
-  recipeIngredient: RecipeIngredientEntity;
+  recipeIngredient: RecipeIngredientEntity[];
 
   @OneToMany(() => FavoriteEntity, (favorite) => favorite.recipe)
   favorite: FavoriteEntity[];

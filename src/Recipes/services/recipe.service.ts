@@ -30,7 +30,19 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
     if (value) {
       const filter = value.split(',');
-      x=x.where('ingredient.name IN (:...ingredients)', { ingredients: filter});
+      // x = x.where('ingredient.name IN (:...ingredients)', {
+      //   ingredients: filter,
+      // });
+      Logger.log(filter);
+      Logger.log(filter[0]);
+      Logger.log(filter.length);
+      x = x.where('ingredient.name = :ingredient', { ingredient: filter[0] });
+      for (let i = 0; i < filter.length; i++) {
+        Logger.log(filter[i]);
+        x = x.andWhere('ingredient.name = :ingredient', {
+          ingredient: filter[i],
+        });
+      }
     }
     return x.select(['recipe']).getMany();
 

@@ -34,11 +34,20 @@ export class RecipeIngredientEntity {
   @JoinColumn({ name: 'ingredientId', referencedColumnName: 'id' })
   ingredient: IngredientEntity;
 
-  @OneToOne(() => RecipeEntity, (recipe) => recipe.recipeIngredient, {
-    eager: true,
-  })
+  @ManyToOne(
+    () => RecipeEntity,
+    (recipe) => recipe.recipeIngredient,
+    // eslint-disable-next-line prettier/prettier
+    { eager: true },
+  )
   @JoinColumn({ name: 'recipeId', referencedColumnName: 'id' })
   recipe: RecipeEntity;
+
+  // @OneToOne(() => RecipeEntity, (recipe) => recipe.recipeIngredient, {
+  //   eager: true,
+  // })
+  // @JoinColumn({ name: 'recipeId', referencedColumnName: 'id' })
+  // recipe: RecipeEntity;
 
   // @ManyToOne(() => IngredientEntity, (ingredient) => ingredient.id)
   // ingredient: IngredientEntity;

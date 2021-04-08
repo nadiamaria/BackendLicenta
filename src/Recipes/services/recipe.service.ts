@@ -7,7 +7,6 @@ import { Logger } from '@nestjs/common';
 import * as _ from 'lodash';
 import { Recipe_ingredients } from '../models/recipe_ingredients.models';
 
-
 @Injectable()
 export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
   // public findAll(): Observable<RecipeModel[]> {
@@ -54,7 +53,8 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
             'recipe_2.id = recipe.id AND ingredient_2.name IN (:...ingredients)',
             {
               ingredients: filter,
-          })
+            },
+          )
           .groupBy('recipe_2.id')
           .andHaving('COUNT(1) = :filter_length', {
             filter_length: filter.length,
@@ -62,13 +62,6 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
           .getQuery();
         return 'recipe.id IN ' + subQuery;
       });
-      // query = query.where('ingredient.name IN (:...ingredients)', {
-      //   ingredients: filter,
-      // });
-      // // query = query.addSelect('COUNT(1) AS IngredientsNumber');
-      // query = query.groupBy('recipe.id')
-      // .andHaving('COUNT(1) = :filter_length', { filter_length : filter.length });
-      // // .where('IngredientsNumber > :filter_length', { filter_length : filter.length });
       const result = await query.select(['recipe', 'ingredient']).getRawMany();
       return _(result)
         .groupBy('recipe_id')

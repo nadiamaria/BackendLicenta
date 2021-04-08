@@ -20,14 +20,21 @@ export class Recipe_ingredients {
   image: string;
   ingredients: Array<Ingredient>;
 
-  public constructor(id: number, ingredient: any){
+  public constructor(id: number, ingredient: any) {
     const recipe = ingredient[0];
     this.id = ingredient.recipe_id;
     this.name = recipe.recipe_name;
     this.instruction = recipe.recipe_instruction;
     this.description = recipe.recipe_description;
     this.image = recipe.recipe_image;
-    
-    this.ingredients = ingredient.map(i => new Ingredient(i.ingredient_id, i.ingredient_name, i.ingredient_ingredientCategorId));
+
+    this.ingredients = ingredient.map(
+      (i) =>
+        new Ingredient(
+          i.ingredient_id,
+          i.ingredient_name,
+          i.ingredient_ingredientCategorId,
+        ),
+    );
   }
 }

@@ -34,16 +34,21 @@ export class RecipeController {
   constructor(public recipeService: RecipeService) {}
 
   @Get()
-  getALL(@Query('ingredients') ingredients: string, @Query('category') category: string ) {
+  getALL(
+    @Query('ingredients') ingredients: string,
+    @Query('category') category: string,
+  ) {
     // ingredients = 'orez,rice';
     // Logger.log(ingredients);
 
     // if (ingredients) {
     Logger.log('eu');
 
-    return this.recipeService.getRecipeByParams(ingredients, category).then((a) => {
-      Logger.log(category);
-      return a;
+    return this.recipeService
+      .getRecipeByParams(ingredients, category)
+      .then((a) => {
+        Logger.log(category);
+        return a;
     });
     // } else {
     // Logger.log('tu');

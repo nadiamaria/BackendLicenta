@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { UserEntity } from '../entities/user.entity';
-import { User } from '../models/user.models';
+import CreateUserDto from '../../authentication/dto/CreateUserDto';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
@@ -19,16 +19,6 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return x;
   }
 
-  // async getUser(options?: any): Promise<User> {
-  //   // const user = await this.repo.findOne(options);
-  //   // return toUserDto(user);
-
-  //   const myUser = await this.repo
-  //     .createQueryBuilder('user')
-  //     .where('user.username = :id OR user.password = :name', { id: 1, name: 'Timber' })
-  //     .getOne();
-  // }
-
   postUser(user: UserEntity): Promise<UserEntity> {
     return this.repo.save(user);
   }
@@ -41,13 +31,29 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     await this.repo.delete(id);
   }
 
-  async create(user: UserEntity): Promise<any> {
-    return await this.repo.save(user);
+  // create(user: UserEntity): Promise<any> {
+  //   return this.repo.save(user);
+  // }
+
+  async getByEmail(email: string) {
+    const user = await this.repo.findOne({ email });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
+  }
+ 
+  async create(userData: CreateUserDto) {
+    const newUser = await this.repo.create(userData);
+    await this.repo.save(newUser);
+    return newUser;
+  }
+
+  async getById(id: number) {
+    const user = await this.repo.findOne({ id });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
   }
 }
-
-export const toUserDto = (data: UserEntity): User => {
-  const { id, username, password } = data;
-  const user: User = { id, username, password };
-  return user;
-};

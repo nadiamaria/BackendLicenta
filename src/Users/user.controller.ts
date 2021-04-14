@@ -37,8 +37,14 @@ export class UserController {
   //   this.create(user);
   // }
 
+  // @Post()
+  // post(@Body() user: UserEntity) {
+  //   return this.userService.create(user);
+  // }
+
   @Post()
-  post(@Body() user: UserEntity) {
+  post(@Body(new ValidationPipe()) user: UserEntity) {
+    //user.password =
     return this.userService.create(user);
   }
 

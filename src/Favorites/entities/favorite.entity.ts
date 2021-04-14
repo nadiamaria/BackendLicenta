@@ -13,7 +13,7 @@ export class FavoriteEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 500, unique: true })
+  @Column('varchar', { length: 500 })
   name: string;
 
   @Column({ nullable: false })

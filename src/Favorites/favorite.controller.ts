@@ -1,5 +1,17 @@
 // eslint-disable-next-line prettier/prettier
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 
 import { FavoriteEntity } from './entities/favorite.entity';
@@ -21,16 +33,26 @@ import { FavoriteService } from './services/favorite.service';
 export class FavoriteController {
   constructor(public favoriteService: FavoriteService) {}
 
-  @Get()
-  getALL() {
-    return this.favoriteService.getALLFavorite().catch((a) => {
-      return a;
-    });
-  }
+  // @Get()
+  // getALL() {
+  //   return this.favoriteService.getALLFavorite().catch((a) => {
+  //     return a;
+  //   });
+  // }
 
   @Get(':id')
   getById(@Param('id', ParseIntPipe) id: number) {
     return this.favoriteService.getFavoriteByID(id).catch((a) => {
+      return a;
+    });
+  }
+
+  @Get()
+  getUserFavorite(
+    @Query('user') user: number,
+    @Query('recipe') recipe: number,
+  ) {
+    return this.favoriteService.getFavoriteByParams(user, recipe).then((a) => {
       return a;
     });
   }
@@ -51,6 +73,11 @@ export class FavoriteController {
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     this.favoriteService.removeFavorite(id);
+  }
+
+  @Delete()
+  deleteByParams(@Query('user') user: number, @Query('recipe') recipe: number) {
+    this.favoriteService.removeFavoritebyParams(user, recipe);
   }
 
   // @Get('/:id/ingredientsCategoryList')

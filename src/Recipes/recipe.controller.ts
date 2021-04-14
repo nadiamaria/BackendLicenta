@@ -37,26 +37,23 @@ export class RecipeController {
   getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
+    @Query('user') user: number,
   ) {
-    // ingredients = 'orez,rice';
-    // Logger.log(ingredients);
-
-    // if (ingredients) {
     Logger.log('eu');
-
     return this.recipeService
-      .getRecipeByParams(ingredients, category)
+      .getRecipeByParams(ingredients, category, user)
       .then((a) => {
         Logger.log(category);
         return a;
-    });
-    // } else {
-    // Logger.log('tu');
+      });
+  }
 
-    //   return this.recipeService.getALLReacipes().catch((a) => {
-    //     return a;
-    //   });
-    // }
+  @Get()
+  getALLFavorite(@Query('user') user: number) {
+    Logger.log('user');
+    return this.recipeService.getRecipeByFavoritePerUser(user).then((a) => {
+      return a;
+    });
   }
 
   // @Get('/name/:name')

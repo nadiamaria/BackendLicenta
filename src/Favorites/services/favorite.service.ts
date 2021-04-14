@@ -19,6 +19,14 @@ export class FavoriteService extends TypeOrmCrudService<FavoriteEntity> {
     return x;
   }
 
+  getFavoriteByParams(user: number, recipe: number) {
+    const query = this.repo
+      .createQueryBuilder('favorite')
+      .andWhere('favorite.userId = :idUser', { idUser: user })
+      .andWhere('favorite.recipeId = :idRecipe', { idRecipe: recipe });
+    return query.select(['favorite']).getMany();
+  }
+
   postFavorite(favorite: FavoriteEntity): Promise<any> {
     return this.repo.save(favorite);
   }
@@ -29,6 +37,10 @@ export class FavoriteService extends TypeOrmCrudService<FavoriteEntity> {
 
   async removeFavorite(id: number): Promise<void> {
     await this.repo.delete(id);
+  }
+
+  async removeFavoritebyParams(user: number, recipe: number): Promise<void> {
+    await this.repo.delete({ userId: user, recipeId: recipe });
   }
 
   // async getIngredientCategory(id: number): Promise<any> {

@@ -10,6 +10,7 @@ import { RecipeIngredientModule } from './RecipesIngredients/recipe-ingredient.m
 import { UserModule } from './Users/user.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import * as Joi from 'joi';
     UserModule,
     FavoriteModule,
     RecipeCategoryModule,
+    AuthenticationModule,
     TypeOrmModule.forRoot(),
     ConfigModule.forRoot({
       validationSchema: Joi.object({

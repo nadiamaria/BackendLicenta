@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import Joi from 'joi';
 import { FavoriteModule } from './Favorites/favorite.module';
 
 import { IngredientModule } from './Ingredients/ingredient.module';
@@ -10,6 +9,7 @@ import { RecipeCategoryModule } from './RecipesCategory/recipe-category.module';
 import { RecipeIngredientModule } from './RecipesIngredients/recipe-ingredient.module';
 import { UserModule } from './Users/user.module';
 import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [

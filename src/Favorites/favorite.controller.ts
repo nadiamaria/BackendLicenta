@@ -49,7 +49,7 @@ export class FavoriteController {
 
   @Get()
   getUserFavorite(
-    @Query('user') user: number,
+    @Query('user') user: number, //take token from cookie
     @Query('recipe') recipe: number,
   ) {
     return this.favoriteService.getFavoriteByParams(user, recipe).then((a) => {

@@ -28,17 +28,16 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
   async getRecipeByParams(
     ingredients?: string,
     category?: string,
-    user?: number,
   ): Promise<any> {
-    if (user) {
-      let query = this.repo
-        .createQueryBuilder('recipe')
-        .innerJoin('recipe.favorite', 'favorite')
-        .innerJoin('favorite.user', 'user');
-      query = query.andWhere('user.id = :id', { id: user });
-      Logger.log(query.getQueryAndParameters());
-      return query.select(['recipe']).getMany();
-    }
+    // if (user) {
+    //   let query = this.repo
+    //     .createQueryBuilder('recipe')
+    //     .innerJoin('recipe.favorite', 'favorite')
+    //     .innerJoin('favorite.user', 'user');
+    //   query = query.andWhere('user.id = :id', { id: user });
+    //   Logger.log(query.getQueryAndParameters());
+    //   return query.select(['recipe']).getMany();
+    // }
 
     let query = this.repo
       .createQueryBuilder('recipe')

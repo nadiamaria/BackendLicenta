@@ -10,12 +10,18 @@ import {
   Post,
   Put,
   Query,
+  Req,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 
 import { FavoriteEntity } from './entities/favorite.entity';
+import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 import { FavoriteService } from './services/favorite.service';
+import RequestWithUser from 'src/authentication/requestWithUser.interface';
+import favoriteWithoutUserDto from './dto/favoriteWithoutUserDto';
+import createFavoriteDto from './dto/createFavoriteDto';
 
 @Crud({
   model: {
@@ -47,19 +53,36 @@ export class FavoriteController {
     });
   }
 
+  @UseGuards(JwtAuthenticationGuard)
   @Get()
   getUserFavorite(
-    @Query('user') user: number, //take token from cookie
+    @Req() request: RequestWithUser, //take token from cookie
     @Query('recipe') recipe: number,
   ) {
-    return this.favoriteService.getFavoriteByParams(user, recipe).then((a) => {
-      return a;
-    });
+    const user = request.user;
+    user.password = undefined;
+    return this.favoriteService
+      .getFavoriteByParams(user.id, recipe)
+      .then((a) => {
+        return a;
+      });
   }
-
+  //DACA exista sa verific ca incarca de 2 ori!!!!!!!!111
+  @UseGuards(JwtAuthenticationGuard)
   @Post()
-  post(@Body(new ValidationPipe()) favorite: FavoriteEntity) {
-    return this.favoriteService.postFavorite(favorite);
+  post(
+    @Req() request: RequestWithUser,
+    @Body(new ValidationPipe()) favorite: favoriteWithoutUserDto,
+  ) {
+    const user = request.user;
+    user.password = undefined;
+    const modifFavorite: createFavoriteDto = {
+      id: favorite.id,
+      name: favorite.name,
+      recipeId: favorite.recipeId,
+      userId: user.id,
+    };
+    return this.favoriteService.postFavorite(modifFavorite);
   }
 
   @Put(':id')

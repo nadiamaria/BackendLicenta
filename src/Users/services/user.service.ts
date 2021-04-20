@@ -40,9 +40,12 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     if (user) {
       return user;
     }
-    throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
+    throw new HttpException(
+      'User with this email does not exist',
+      HttpStatus.NOT_FOUND,
+    );
   }
- 
+
   async create(userData: CreateUserDto) {
     const newUser = await this.repo.create(userData);
     await this.repo.save(newUser);
@@ -54,6 +57,9 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     if (user) {
       return user;
     }
-    throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+    throw new HttpException(
+      'User with this id does not exist',
+      HttpStatus.NOT_FOUND,
+    );
   }
 }

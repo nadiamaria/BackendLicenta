@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import createFavoriteDto from '../dto/createFavoriteDto';
 
 import { FavoriteEntity } from '../entities/favorite.entity';
 
@@ -27,7 +28,7 @@ export class FavoriteService extends TypeOrmCrudService<FavoriteEntity> {
     return query.select(['favorite']).getMany();
   }
 
-  postFavorite(favorite: FavoriteEntity): Promise<any> {
+  postFavorite(favorite: createFavoriteDto): Promise<any> {
     return this.repo.save(favorite);
   }
 

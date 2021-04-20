@@ -9,6 +9,8 @@ import {
   Post,
   Put,
   Query,
+  Req,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
@@ -16,6 +18,8 @@ import { RecipeEntity } from './entities/recipe.entity';
 import { Recipe } from './models/recipe.models';
 import { RecipeService } from './services/recipe.service';
 import { Logger } from '@nestjs/common';
+import JwtAuthenticationGuard from 'src/authentication/jwt-authentication.guard';
+import RequestWithUser from 'src/authentication/requestWithUser.interface';
 
 @Crud({
   model: {
@@ -37,21 +41,22 @@ export class RecipeController {
   getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
-    @Query('user') user: number,
   ) {
     Logger.log('eu');
     return this.recipeService
-      .getRecipeByParams(ingredients, category, user)
+      .getRecipeByParams(ingredients, category)
       .then((a) => {
         Logger.log(category);
         return a;
       });
   }
 
-  @Get()
-  getALLFavorite(@Query('user') user: number) {
-    Logger.log('user');
-    return this.recipeService.getRecipeByFavoritePerUser(user).then((a) => {
+  @UseGuards(JwtAuthenticationGuard)
+  @Get('favorites')
+  getALLFavorite(@Req() request: RequestWithUser) {
+    const user = request.user;
+    user.password = undefined;
+    return this.recipeService.getRecipeByFavoritePerUser(user.id).then((a) => {
       return a;
     });
   }

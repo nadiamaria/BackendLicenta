@@ -66,16 +66,15 @@ export class AuthenticationService {
       );
     }
   }
-
-  public getCookieWithJwtToken(userId: number) {
-    const payload: TokenPayload = { userId };
+  // return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+  //   'JWT_EXPIRATION_TIME',
+  public getCookieWithJwtToken(userId: number, name: string, exprDate: string) {
+    const payload: TokenPayload = { userId, name, exprDate };
     const token = this.jwtService.sign(payload);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_EXPIRATION_TIME',
-    )}`;
+    return token;
   }
 
   public getCookieForLogOut() {
-    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;//TO DO invalidate token jwt
   }
 }

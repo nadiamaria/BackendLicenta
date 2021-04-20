@@ -10,6 +10,7 @@ import {
   Put,
   Query,
   Req,
+  Res,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -20,6 +21,10 @@ import { RecipeService } from './services/recipe.service';
 import { Logger } from '@nestjs/common';
 import JwtAuthenticationGuard from 'src/authentication/jwt-authentication.guard';
 import RequestWithUser from 'src/authentication/requestWithUser.interface';
+import { request } from 'http';
+import { Request, Response } from 'express';
+import jwtDecode from 'jwt-decode';
+import { TokenPayload } from 'src/authentication/tokenPayload.interface';
 
 @Crud({
   model: {
@@ -37,12 +42,32 @@ import RequestWithUser from 'src/authentication/requestWithUser.interface';
 export class RecipeController {
   constructor(public recipeService: RecipeService) {}
 
+  public isTokenValid(string?: any): boolean {
+    Logger.log('1');
+    Logger.log(string);
+    const objsect = jwtDecode((string || '') + '') as Partial<TokenPayload>;
+    Logger.log(objsect?.exprDate);
+    //verificat exprDate > < ca Date
+    //exprDate sa fie formatat in tipul isoString
+    //date type time? ISO 8601
+    return true;
+  }
+
   @Get()
   getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
+    @Req() request : Request,
+    @Res() response : Response
   ) {
-    Logger.log('eu');
+    //de dat refactor
+    if( this.isTokenValid(request.headers['authentication'])){
+      response.statusCode = 403;
+      response.end();
+      return ;
+    }
+    this.isTokenValid(request.headers['authentication']);
+    // Logger.log(request.headers['authentication']);
     return this.recipeService
       .getRecipeByParams(ingredients, category)
       .then((a) => {

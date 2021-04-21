@@ -40,7 +40,7 @@ export class AuthenticationController {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id, user.email, Date.now().toString());
     // response.setHeader('Access-Control-Allow-Credentials', 'true');
-    // response.setHeader('Set-Cookie', cookie);
+    response.setHeader('Set-Cookie', cookie);
     user.token = cookie;
     user.password = undefined; //@exclude?
     return response.send(user);

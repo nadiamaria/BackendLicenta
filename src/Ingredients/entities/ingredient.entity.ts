@@ -1,3 +1,4 @@
+import { truncate } from 'fs';
 import { IngredientsCategoryEntity } from 'src/IngredientsCategory/entities/ingredients-category.entity';
 import { RecipeIngredientEntity } from 'src/RecipesIngredients/entities/recipe-ingredient.entity';
 import {
@@ -17,16 +18,16 @@ export class IngredientEntity {
   @Column('varchar', { length: 500, unique: true })
   name: string;
 
-  @Column({ nullable: false })
-  ingredientCategoryId: number;
+  // @Column({ nullable: true })
+  // ingredientCategoryId: number;
 
-  @ManyToOne(
-    () => IngredientsCategoryEntity,
-    (ingredientsCategory) => ingredientsCategory.ingredient,
-    { eager: true },
-  )
-  @JoinColumn({ name: 'ingredientCategoryId', referencedColumnName: 'id' })
-  ingredientsCategory: IngredientsCategoryEntity;
+  // @ManyToOne(
+  //   () => IngredientsCategoryEntity,
+  //   (ingredientsCategory) => ingredientsCategory.ingredient,
+  //   { eager: true },
+  // )
+  // @JoinColumn({ name: 'ingredientCategoryId', referencedColumnName: 'id' })
+  // ingredientsCategory: IngredientsCategoryEntity;
 
   @OneToMany(
     () => RecipeIngredientEntity,

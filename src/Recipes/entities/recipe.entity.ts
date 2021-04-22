@@ -1,6 +1,7 @@
 import { FavoriteEntity } from 'src/Favorites/entities/favorite.entity';
 import { RecipeCategoryEntity } from 'src/RecipesCategory/entities/recipe-category.entity';
 import { RecipeIngredientEntity } from 'src/RecipesIngredients/entities/recipe-ingredient.entity';
+import { RecipeTypeEntity } from 'src/RecipesType/entities/recipe-type.entity';
 import {
   Column,
   Entity,
@@ -30,6 +31,9 @@ export class RecipeEntity {
   @Column({ nullable: false })
   recipeCategoryId: number;
 
+  @Column({ nullable: false })
+  recipeTypeId: number;
+
   @ManyToOne(
     () => RecipeCategoryEntity,
     (recipeCategory) => recipeCategory.recipe,
@@ -37,6 +41,12 @@ export class RecipeEntity {
   )
   @JoinColumn({ name: 'recipeCategoryId', referencedColumnName: 'id' })
   recipeCategory: RecipeCategoryEntity;
+
+  @ManyToOne(() => RecipeTypeEntity, (recipeType) => recipeType.recipe, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'recipeTypeId', referencedColumnName: 'id' })
+  recipeType: RecipeTypeEntity;
 
   // @OneToOne(
   //   () => RecipeIngredientEntity,

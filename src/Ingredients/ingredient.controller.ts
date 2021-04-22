@@ -69,8 +69,8 @@ export class IngredientController {
     this.ingredientService.removeIngerdient(id);
   }
 
-  @Get('/:id/ingredientsCategoryList')
-  async getCategory(@Param('id', ParseIntPipe) id: number) {
-    return this.ingredientService.getIngredientCategory(id);
-  }
+  // @Get('/:id/ingredientsCategoryList')
+  // async getCategory(@Param('id', ParseIntPipe) id: number) {
+  //   return this.ingredientService.getIngredientCategory(id);
+  // }
 }

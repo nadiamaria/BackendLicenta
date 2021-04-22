@@ -31,11 +31,11 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
     await this.repo.delete(id);
   }
 
-  async getIngredientCategory(id: number): Promise<any> {
-    const ingredient: IngredientEntity = await this.repo.findOne({
-      where: { id: id },
-      relations: ['ingredientsCategory'],
-    });
-    return ingredient.ingredientsCategory;
-  }
+  // async getIngredientCategory(id: number): Promise<any> {
+  //   const ingredient: IngredientEntity = await this.repo.findOne({
+  //     where: { id: id },
+  //     relations: ['ingredientsCategory'],
+  //   });
+  //   return ingredient.ingredientsCategory;
+  // }
 }

@@ -1,5 +1,15 @@
 // eslint-disable-next-line prettier/prettier
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 
 import { RecipeCategoryEntity } from './entities/recipe-category.entity';

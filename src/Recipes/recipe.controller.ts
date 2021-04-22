@@ -57,16 +57,16 @@ export class RecipeController {
   getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
-    @Req() request : Request,
-    @Res() response : Response
+    // @Req() request: Request,
+    // @Res() response: Response,
   ) {
     //de dat refactor
-    if( this.isTokenValid(request.headers['authentication'])){
-      response.statusCode = 403;
-      response.end();
-      return ;
-    }
-    this.isTokenValid(request.headers['authentication']);
+    // if (this.isTokenValid(request.headers['authentication'])) {
+    //   response.statusCode = 403;
+    //   response.end();
+    //   return;
+    // }
+    // this.isTokenValid(request.headers['authentication']);
     // Logger.log(request.headers['authentication']);
     return this.recipeService
       .getRecipeByParams(ingredients, category)

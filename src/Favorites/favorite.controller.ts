@@ -57,8 +57,10 @@ export class FavoriteController {
   @Get()
   getUserFavorite(
     @Req() request: RequestWithUser, //take token from cookie
-    @Query('recipe') recipe: number,
+    @Query('recipe') recipe: number, //recipeID
   ) {
+    Logger.log('what');
+    Logger.log(request);
     const user = request.user;
     user.password = undefined;
     return this.favoriteService

@@ -89,7 +89,7 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
       .createQueryBuilder('recipe')
       .innerJoin('recipe.favorite', 'favorite')
       .innerJoin('favorite.user', 'user');
-    query = query.andWhere('user.user_id = :user_id', { user_id: user });
+    query = query.andWhere('user.id = :user_id', { user_id: user });
     return query.select(['recipe']).getMany();
   }
 

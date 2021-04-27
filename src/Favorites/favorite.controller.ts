@@ -39,37 +39,45 @@ import createFavoriteDto from './dto/createFavoriteDto';
 export class FavoriteController {
   constructor(public favoriteService: FavoriteService) {}
 
-  // @Get()
-  // getALL() {
-  //   return this.favoriteService.getALLFavorite().catch((a) => {
-  //     return a;
-  //   });
-  // }
-
-  @Get(':id')
-  getById(@Param('id', ParseIntPipe) id: number) {
-    return this.favoriteService.getFavoriteByID(id).catch((a) => {
+  @UseGuards(JwtAuthenticationGuard)
+  @Get()
+  getALL() {
+    return this.favoriteService.getALLFavorite().catch((a) => {
       return a;
     });
   }
 
   @UseGuards(JwtAuthenticationGuard)
-  @Get()
-  getUserFavorite(
-    @Req() request: RequestWithUser, //take token from cookie
-    @Query('recipe') recipe: number, //recipeID
+  @Get(':id')
+  getById(
+    @Req() request: RequestWithUser,
+    @Param('id', ParseIntPipe) id: number,
   ) {
-    Logger.log('what');
-    Logger.log(request);
-    const user = request.user;
-    user.password = undefined;
     return this.favoriteService
-      .getFavoriteByParams(user.id, recipe)
-      .then((a) => {
+      .getFavoriteByID(request.user.id, id)
+      .catch((a) => {
         return a;
       });
   }
-  //DACA exista sa verific ca incarca de 2 ori!!!!!!!!111
+
+  // @UseGuards(JwtAuthenticationGuard)
+  // @Get('what')
+  // getUserFavorite(
+  //   @Req() request: RequestWithUser, //take token from cookie//
+  //   @Query('recipe') recipe: number, //recipeID
+  // ) {
+  //   Logger.log('what');
+  //   Logger.log(request);
+  //   const user = request.user;
+  //   user.password = undefined;
+  //   return this.favoriteService
+  //     .getFavoriteByParams(user.id, recipe)
+  //     .then((a) => {
+  //       return a;
+  //     });
+  // }
+
+  //post favorite per user from cookie
   @UseGuards(JwtAuthenticationGuard)
   @Post()
   post(
@@ -95,14 +103,18 @@ export class FavoriteController {
     this.favoriteService.editFavorite(id, favorite);
   }
 
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    this.favoriteService.removeFavorite(id);
-  }
+  // @Delete(':id')
+  // delete(@Param('id', ParseIntPipe) id: number) {
+  //   this.favoriteService.removeFavorite(id);
+  // }
 
-  @Delete()
-  deleteByParams(@Query('user') user: number, @Query('recipe') recipe: number) {
-    this.favoriteService.removeFavoritebyParams(user, recipe);
+  @UseGuards(JwtAuthenticationGuard)
+  @Delete(':id')
+  deleteByParams(
+    @Req() request: RequestWithUser,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    this.favoriteService.removeFavoritebyParams(request.user.id, id);
   }
 
   // @Get('/:id/ingredientsCategoryList')

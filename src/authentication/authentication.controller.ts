@@ -38,10 +38,18 @@ export class AuthenticationController {
   @Post('log-in')
   async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
     const { user } = request;
-    const cookie = this.authenticationService.getCookieWithJwtToken(user.id, user.email, Date.now().toString());
+    const cookie = this.authenticationService.getCookieWithJwtToken(
+      user.id,
+      user.email,
+      Date.now().toString(),
+    );
     // response.setHeader('Access-Control-Allow-Credentials', 'true');
-    response.setHeader('Set-Cookie', cookie);
-    user.token = cookie;
+    response.cookie('authorization', cookie, {
+      httpOnly: false,
+      secure: false,
+    });
+    //autorizations
+    // user.token = cookie;
     user.password = undefined; //@exclude?
     return response.send(user);
   }
@@ -49,10 +57,10 @@ export class AuthenticationController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-    // response.setHeader(
-    //   'Set-Cookie',
-    //   this.authenticationService.getCookieForLogOut(),
-    // );
+    response.setHeader(
+      'Set-Cookie',
+      this.authenticationService.getCookieForLogOut(),
+    );
     return response.sendStatus(200);
   }
 

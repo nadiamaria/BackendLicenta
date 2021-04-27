@@ -5,7 +5,21 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { TokenPayload } from './tokenPayload.interface';
 import { UserService } from 'src/Users/services/user.service';
- 
+
+const cookieExtractor = function (req) {
+  let token = null;
+  if (req && req.headers) {
+    const cookies = req.headers['set-cookie'];
+    const words = cookies.split('=');
+    token = words[0];
+  }
+  Logger.log('token = ' + typeof token);
+  Logger.log('header = ' + req.headers);
+  console.log(req.headers);
+
+  return token;
+};
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -13,14 +27,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly userService: UserService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
-        Logger.log('ceva');
-        return request?.cookies?.Authentication;
-      }]),
-      secretOrKey: configService.get('JWT_SECRET')
+      jwtFromRequest: cookieExtractor,
+      // ExtractJwt.fromExtractors([
+      //   (request: Request) => {
+      //     Logger.log('ceva');
+      //     return request?.cookies?.Authentication;
+      //   },
+      // ]),
+      secretOrKey: configService.get('JWT_SECRET'),
     });
   }
- 
+
   async validate(payload: TokenPayload) {
     return this.userService.getById(payload.userId);
   }

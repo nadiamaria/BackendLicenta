@@ -15,8 +15,8 @@ export class FavoriteService extends TypeOrmCrudService<FavoriteEntity> {
     return this.repo.find();
   }
 
-  getFavoriteByID(id: number): Promise<any> {
-    const x = this.repo.findOne({ id: id });
+  getFavoriteByID(userid: number, recipeid: number): Promise<any> {
+    const x = this.repo.findOne({ userId: userid, recipeId: recipeid });
     return x;
   }
 

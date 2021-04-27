@@ -1,7 +1,7 @@
 import RegisterDto from '../dto/register.dto';
 import { UserService } from '../../Users/services/user.service';
 import * as bcrypt from 'bcrypt';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from '../tokenPayload.interface';
@@ -69,13 +69,16 @@ export class AuthenticationService {
   // return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
   //   'JWT_EXPIRATION_TIME',
   public getCookieWithJwtToken(userId: number, name: string, exprDate: string) {
-    const payload: TokenPayload = { userId, name, exprDate };
+    const payload: TokenPayload = { userId, name, exprDate }; //add max age
     const token = this.jwtService.sign(payload);
-    // return token;`
-      return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get( 'JWT_EXPIRATION_TIME',)}`;
+    Logger.log(token);
+    return token;
+    // return `Authentication=${token}; Path=/; Max-Age=${this.configService.get(
+    //   'JWT_EXPIRATION_TIME',
+    // )}`;
   }
 
   public getCookieForLogOut() {
-    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;//TO DO invalidate token jwt
+    return `Authentication=; Path=/; Max-Age=0`; //TO DO invalidate token jwt
   }
 }

@@ -14,7 +14,7 @@ export class RecipeIngredientEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   unit_mas: string;
 
   @Column()

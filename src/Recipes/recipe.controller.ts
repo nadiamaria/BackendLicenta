@@ -57,7 +57,7 @@ export class RecipeController {
   getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
-    // @Req() request: Request,
+    @Req() request: Request,
     // @Res() response: Response,
   ) {
     //de dat refactor
@@ -67,7 +67,9 @@ export class RecipeController {
     //   return;
     // }
     // this.isTokenValid(request.headers['authentication']);
-    // Logger.log(request.headers['authentication']);
+    Logger.log('retete');
+    Logger.log(request.headers['authentication']);
+    Logger.log(request.cookies);
     return this.recipeService
       .getRecipeByParams(ingredients, category)
       .then((a) => {
@@ -79,11 +81,11 @@ export class RecipeController {
   @UseGuards(JwtAuthenticationGuard)
   @Get('favorites')
   getALLFavorite(@Req() request: RequestWithUser) {
-    const user = request.user;
-    user.password = undefined;
-    return this.recipeService.getRecipeByFavoritePerUser(user.id).then((a) => {
-      return a;
-    });
+    return this.recipeService
+      .getRecipeByFavoritePerUser(request.user.id)
+      .then((a) => {
+        return a;
+      });
   }
 
   // @Get('/name/:name')

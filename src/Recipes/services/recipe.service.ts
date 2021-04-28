@@ -44,7 +44,7 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
       .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
     if (category) {
-      Logger.log(category);
+
       query = query.innerJoin('recipe.recipeCategory', 'recipeCategory');
       query = query.andWhere('recipeCategory.category_name = :category_name', {
         category_name: category,
@@ -84,7 +84,6 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
   }
 
   async getRecipeByFavoritePerUser(user: number): Promise<any> {
-    Logger.log('user');
     let query = this.repo
       .createQueryBuilder('recipe')
       .innerJoin('recipe.favorite', 'favorite')

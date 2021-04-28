@@ -9,13 +9,16 @@ import { UserService } from 'src/Users/services/user.service';
 const cookieExtractor = function (req) {
   let token = null;
   if (req && req.headers) {
-    const cookies = req.headers['set-cookie'];
-    const words = cookies.split('=');
-    token = words[0];
+    token = req.headers['set-cookie'];
+    token = token[0].split('=')[1];
+    console.log('wtf');
+    // const words = cookies.split('=');
+    // token = words[0];
   }
-  Logger.log('token = ' + typeof token);
-  Logger.log('header = ' + req.headers);
-  console.log(req.headers);
+  // Logger.log('token = ' + token[0]);
+  // console.log(token[0].split('=')[1]);
+  // Logger.log('header = ' + req.headers);
+  // console.log(req.headers);
 
   return token;
 };

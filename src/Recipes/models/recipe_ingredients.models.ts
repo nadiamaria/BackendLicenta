@@ -22,7 +22,7 @@ export class Recipe_ingredients {
 
   public constructor(id: number, ingredient: any) {
     const recipe = ingredient[0];
-    this.id = ingredient.recipe_id;
+    this.id = recipe.recipe_id;
     this.name = recipe.recipe_name;
     this.instruction = recipe.recipe_instruction;
     this.description = recipe.recipe_description;

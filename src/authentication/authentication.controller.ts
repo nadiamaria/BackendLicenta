@@ -57,11 +57,18 @@ export class AuthenticationController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-    response.setHeader(
-      'Set-Cookie',
-      this.authenticationService.getCookieForLogOut(),
-    );
-    return response.sendStatus(200);
+    const { user } = request;
+    console.log('etc');
+    response.cookie('authorization', this.authenticationService.getCookieForLogOut(), {
+      httpOnly: false,
+      secure: false,
+    });
+    // response.setHeader(
+    //   'Set-Cookie',
+    //   `authorization=nup`
+    // );
+    // return response.sendStatus(200);
+    return response.send(user);
   }
 
   @UseGuards(JwtAuthenticationGuard)

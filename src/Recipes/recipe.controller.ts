@@ -43,10 +43,7 @@ export class RecipeController {
   constructor(public recipeService: RecipeService) {}
 
   public isTokenValid(string?: any): boolean {
-    Logger.log('1');
-    Logger.log(string);
     const objsect = jwtDecode((string || '') + '') as Partial<TokenPayload>;
-    Logger.log(objsect?.exprDate);
     //verificat exprDate > < ca Date
     //exprDate sa fie formatat in tipul isoString
     //date type time? ISO 8601
@@ -54,7 +51,7 @@ export class RecipeController {
   }
 
   @Get()
-  getALL(
+  async getALL(
     @Query('ingredients') ingredients: string,
     @Query('category') category: string,
     @Req() request: Request,
@@ -67,15 +64,16 @@ export class RecipeController {
     //   return;
     // }
     // this.isTokenValid(request.headers['authentication']);
-    Logger.log('retete');
-    Logger.log(request.headers['authentication']);
-    Logger.log(request.cookies);
-    return this.recipeService
-      .getRecipeByParams(ingredients, category)
-      .then((a) => {
-        Logger.log(category);
-        return a;
-      });
+    // Logger.log('retete');
+    // Logger.log(request.headers['authentication']);
+    // Logger.log(request.cookies);
+    const recipes = await this.recipeService
+      .getRecipeByParams(ingredients, category);
+
+      //id in request token
+      //verif cu for each
+    // console.log(recipes);
+    return recipes;
   }
 
   @UseGuards(JwtAuthenticationGuard)

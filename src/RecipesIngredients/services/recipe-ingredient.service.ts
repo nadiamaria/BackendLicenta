@@ -16,6 +16,11 @@ export class RecipeIngredientService extends TypeOrmCrudService<
     super(repo);
   }
 
+  getRecipeIngredients(recipe?: number): Promise<RecipeIngredientEntity[]> {
+    const x = this.repo.find({ recipeId: recipe });
+    return x;
+  }
+
   getALLReacipesIngredients(): Promise<RecipeIngredientEntity[]> {
     return this.repo.find();
   }

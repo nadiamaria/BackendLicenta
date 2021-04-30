@@ -67,11 +67,13 @@ export class RecipeController {
     // Logger.log('retete');
     // Logger.log(request.headers['authentication']);
     // Logger.log(request.cookies);
-    const recipes = await this.recipeService
-      .getRecipeByParams(ingredients, category);
+    const recipes = await this.recipeService.getRecipeByParams(
+      ingredients,
+      category,
+    );
 
-      //id in request token
-      //verif cu for each
+    //id in request token
+    //verif cu for each
     // console.log(recipes);
     return recipes;
   }

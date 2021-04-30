@@ -44,7 +44,6 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
       .innerJoin('recipe.recipeIngredient', 'recipeIngredient')
       .innerJoin('recipeIngredient.ingredient', 'ingredient');
     if (category) {
-
       query = query.innerJoin('recipe.recipeCategory', 'recipeCategory');
       query = query.andWhere('recipeCategory.category_name = :category_name', {
         category_name: category,

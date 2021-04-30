@@ -50,11 +50,16 @@ export class RecipeIngredientController {
 
   @Get(':id')
   getById(@Param('id', ParseIntPipe) id: number) {
-    return this.recipeingredientService
-      .getRecipeIngredientByID(id)
-      .catch((a) => {
-        return a;
-      });
+    return this.recipeingredientService.getRecipeIngredients(id).catch((a) => {
+      return a;
+    });
+  }
+
+  @Get('recipe/:id')
+  getByRecipeId(@Param('id', ParseIntPipe) id: number) {
+    return this.recipeingredientService.getRecipeIngredients(id).catch((a) => {
+      return a;
+    });
   }
 
   @Post()

@@ -53,8 +53,10 @@ export class RecipeController {
   @Get()
   async getALL(
     @Query('ingredients') ingredients: string,
-    @Query('category') category: string,
-    @Req() request: Request,
+    @Query('categorys') categorys: string,
+    @Query('types') types: string,
+
+    // @Req() request: Request,
     // @Res() response: Response,
   ) {
     //de dat refactor
@@ -69,7 +71,8 @@ export class RecipeController {
     // Logger.log(request.cookies);
     const recipes = await this.recipeService.getRecipeByParams(
       ingredients,
-      category,
+      categorys,
+      types,
     );
 
     //id in request token

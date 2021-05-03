@@ -68,10 +68,14 @@ export class AuthenticationService {
   }
   // return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
   //   'JWT_EXPIRATION_TIME',
-  public getCookieWithJwtToken(userId: number, name: string, exprDate: string) {
-    const payload: TokenPayload = { userId, name, exprDate }; //add max age
+  public getCookieWithJwtToken(userId: number, name: string) {
+    const payload: TokenPayload = { userId, name}; //add max age
     const token = this.jwtService.sign(payload);
-    return token;
+    return {
+      token: token,
+      exprSeconds: +this.configService.get('JWT_EXPIRATION_TIME')*1000
+    }
+    // return token;
     // return `Authentication=${token}; Path=/; Max-Age=${this.configService.get(
     //   'JWT_EXPIRATION_TIME',
     // )}`;

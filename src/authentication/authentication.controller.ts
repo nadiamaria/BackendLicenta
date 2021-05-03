@@ -41,12 +41,13 @@ export class AuthenticationController {
     const cookie = this.authenticationService.getCookieWithJwtToken(
       user.id,
       user.email,
-      Date.now().toString(),
     );
     // response.setHeader('Access-Control-Allow-Credentials', 'true');
-    response.cookie('authorization', cookie, {
+    console.log(cookie);
+    response.cookie('authorization', cookie.token, {
       httpOnly: false,
       secure: false,
+      maxAge: cookie.exprSeconds
     });
     //autorizations
     // user.token = cookie;

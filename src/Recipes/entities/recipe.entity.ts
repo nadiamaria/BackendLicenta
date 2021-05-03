@@ -28,6 +28,9 @@ export class RecipeEntity {
   @Column('varchar', { length: 500 })
   image: string;
 
+  @Column({ nullable: true })
+  kcal: number;
+
   @Column({ nullable: false })
   recipeCategoryId: number;
 

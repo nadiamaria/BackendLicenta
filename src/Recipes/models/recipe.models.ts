@@ -14,4 +14,5 @@ export class Recipe {
   @IsString()
   //@IsNotEmpty()
   image: string;
+  kcal: number;
 }

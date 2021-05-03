@@ -78,11 +78,12 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
           .getQuery();
         return 'recipe.id IN ' + subQuery;
       });
-      const result = await query.select(['recipe', 'ingredient']).getRawMany();
-      return _(result)
-        .groupBy('recipe_id')
-        .map((value, key) => new Recipe_ingredients(key, value))
-        .value();
+      return query.select(['recipe']).getMany();
+      // const result = await query.select(['recipe', 'ingredient']).getRawMany();
+      // return _(result)
+      //   .groupBy('recipe_id')
+      //   .map((value, key) => new Recipe_ingredients(key, value))
+      //   .value();
     }
 
     return query.select(['recipe']).getMany();

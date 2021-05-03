@@ -18,17 +18,6 @@ export class IngredientEntity {
   @Column('varchar', { length: 500, unique: true })
   name: string;
 
-  // @Column({ nullable: true })
-  // ingredientCategoryId: number;
-
-  // @ManyToOne(
-  //   () => IngredientsCategoryEntity,
-  //   (ingredientsCategory) => ingredientsCategory.ingredient,
-  //   { eager: true },
-  // )
-  // @JoinColumn({ name: 'ingredientCategoryId', referencedColumnName: 'id' })
-  // ingredientsCategory: IngredientsCategoryEntity;
-
   @OneToMany(
     () => RecipeIngredientEntity,
     (recipeIngredient) => recipeIngredient.ingredient,

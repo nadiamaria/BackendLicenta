@@ -18,6 +18,7 @@ export class Recipe_ingredients {
   @IsString()
   //@IsNotEmpty()
   image: string;
+  kcal: number;
   ingredients: Array<Ingredient>;
 
   public constructor(id: number, ingredient: any) {
@@ -27,6 +28,7 @@ export class Recipe_ingredients {
     this.instruction = recipe.recipe_instruction;
     this.description = recipe.recipe_description;
     this.image = recipe.recipe_image;
+    this.kcal = recipe.recipe_kcal;
 
     this.ingredients = ingredient.map(
       (i) =>

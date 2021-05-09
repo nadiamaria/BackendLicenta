@@ -12,9 +12,11 @@ export class UserEntity {
   @Column('varchar', { length: 20, nullable: false })
   name: string;
 
+  @Column('varchar', { length: 20, nullable: true })
+  role: string;
+
   @Column('varchar', { nullable: false })
   password: string;
-
 
   @OneToMany(() => FavoriteEntity, (favorite) => favorite.user)
   favorite: FavoriteEntity[];

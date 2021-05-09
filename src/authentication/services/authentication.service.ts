@@ -68,13 +68,20 @@ export class AuthenticationService {
   }
   // return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
   //   'JWT_EXPIRATION_TIME',
-  public getCookieWithJwtToken(userId: number, name: string) {
-    const payload: TokenPayload = { userId, name}; //add max age
+  public getCookieWithJwtToken(userId: number, name: string, role: string) {
+    const payload: TokenPayload = { userId, name, role }; //add max age
     const token = this.jwtService.sign(payload);
+    console.log(this.configService.get('JWT_EXPIRATION_TIME'));
+
     return {
       token: token,
-      exprSeconds: +this.configService.get('JWT_EXPIRATION_TIME')*1000
-    }
+      // exprSeconds: this.configService.get('JWT_EXPIRATION_TIME'),
+      // exprSeconds: new Date().getTime() + ExpirationEnum.hour,
+      //   new Date().getTime() + this.configService.get('JWT_EXPIRATION_TIME'),
+      // JSON.stringify(
+      // ),
+      // +this.configService.get('JWT_EXPIRATION_TIME') * 10000,
+    };
     // return token;
     // return `Authentication=${token}; Path=/; Max-Age=${this.configService.get(
     //   'JWT_EXPIRATION_TIME',
@@ -84,4 +91,10 @@ export class AuthenticationService {
   public getCookieForLogOut() {
     return ` `; //TO DO invalidate token jwt
   }
+
+  // generateToken(email: string): string {const expiresAt = JSON.stringify(new Date().getTime() + ExpirationEnum.hour,);const payload: JwtPayload = { email, expiresAt };return this.jwtService.sign(payload);}
+}
+export enum ExpirationEnum {
+  'day' = 86400000,
+  'hour' = 3600000,
 }

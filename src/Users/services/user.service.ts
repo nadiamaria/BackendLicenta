@@ -10,7 +10,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     super(repo);
   }
 
-  getALLUsers(): Promise<UserEntity[]> {
+  async getALLUsers(): Promise<UserEntity[]> {
     return this.repo.find();
   }
 
@@ -47,6 +47,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   }
 
   async create(userData: CreateUserDto) {
+    if (!userData.role) userData.role = 'user';
     const newUser = await this.repo.create(userData);
     await this.repo.save(newUser);
     return newUser;

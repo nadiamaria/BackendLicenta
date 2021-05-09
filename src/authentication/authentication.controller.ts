@@ -14,13 +14,18 @@ import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import { AuthenticationService } from './services/authentication.service';
 import { Response } from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
+    // if (registrationData.role) registrationData.role = 'user';
     return this.authenticationService.register(registrationData);
   }
 
@@ -41,13 +46,14 @@ export class AuthenticationController {
     const cookie = this.authenticationService.getCookieWithJwtToken(
       user.id,
       user.email,
+      user.role,
     );
     // response.setHeader('Access-Control-Allow-Credentials', 'true');
-    console.log(cookie);
+    console.log(this.configService.get('JWT_EXPIRATION_TIME'));
     response.cookie('authorization', cookie.token, {
       httpOnly: false,
       secure: false,
-      maxAge: cookie.exprSeconds
+      maxAge: this.configService.get('JWT_EXPIRATION_TIME') * 100,
     });
     //autorizations
     // user.token = cookie;
@@ -60,10 +66,14 @@ export class AuthenticationController {
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
     const { user } = request;
     console.log('etc');
-    response.cookie('authorization', this.authenticationService.getCookieForLogOut(), {
-      httpOnly: false,
-      secure: false,
-    });
+    response.cookie(
+      'authorization',
+      this.authenticationService.getCookieForLogOut(),
+      {
+        httpOnly: false,
+        secure: false,
+      },
+    );
     // response.setHeader(
     //   'Set-Cookie',
     //   `authorization=nup`

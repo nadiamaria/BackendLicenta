@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud/lib/decorators/crud.decorator';
 import { UserEntity } from './entities/user.entity';
-import { User } from './models/user.models';
 import { UserService } from './services/user.service';
 
 @Crud({
@@ -44,7 +43,6 @@ export class UserController {
 
   @Post()
   post(@Body(new ValidationPipe()) user: UserEntity) {
-    //user.password =
     return this.userService.create(user);
   }
 

@@ -9,4 +9,6 @@ export class User {
   @IsString()
   @IsNotEmpty()
   password: string;
+  @IsString()
+  role: string;
 }

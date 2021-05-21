@@ -18,6 +18,12 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
     return query.select(['ingredients']).getMany();
   }
 
+  getALLIngredientswithoutOrder(): Promise<any> {
+    // return this.repo.find();
+    const query = this.repo.createQueryBuilder('ingredients');
+    return query.select(['ingredients']).getMany();
+  }
+
   getIngredientByID(id: number): Promise<any> {
     const x = this.repo.findOne({ id: id });
     return x;

@@ -41,6 +41,12 @@ export class RecipeIngredientController {
       });
   }
 
+  @Get('all')
+  getALLNo() {
+    const recipes = this.recipeingredientService.getRecipeIngr();
+    return recipes;
+  }
+
   // @Get('/name/:name')
   // getByName(@Param('name') name: string) {
   //   return this.recipeService.getRecipeByName(name).catch((a) => {

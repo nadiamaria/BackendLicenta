@@ -21,6 +21,11 @@ export class RecipeIngredientService extends TypeOrmCrudService<
     return x;
   }
 
+  getRecipeIngr() {
+    const query = this.repo.createQueryBuilder('recipesIngredients');
+    return query.select(['recipesIngredients']).getMany();
+  }
+
   getALLReacipesIngredients(): Promise<RecipeIngredientEntity[]> {
     return this.repo.find();
   }

@@ -16,19 +16,19 @@ export class RecipeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 200, nullable: false, unique: true })
   name: string;
 
-  @Column('varchar', { length: 500, nullable: true })
+  @Column('varchar', { length: 1000, nullable: false })
   description: string;
 
-  @Column('varchar', { length: 4000 })
+  @Column('varchar', { length: 4000, nullable: false })
   instruction: string;
 
-  @Column('varchar', { length: 500 })
+  @Column('varchar', { length: 500, nullable: false })
   image: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   kcal: number;
 
   @Column({ nullable: false })

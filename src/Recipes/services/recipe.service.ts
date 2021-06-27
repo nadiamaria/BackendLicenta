@@ -30,16 +30,6 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
     categorys?: string,
     types?: string,
   ): Promise<any> {
-    // if (user) {
-    //   let query = this.repo
-    //     .createQueryBuilder('recipe')
-    //     .innerJoin('recipe.favorite', 'favorite')
-    //     .innerJoin('favorite.user', 'user');
-    //   query = query.andWhere('user.id = :id', { id: user });
-    //   Logger.log(query.getQueryAndParameters());
-    //   return query.select(['recipe']).getMany();
-    // }
-    console.log(ingredients + '+' + categorys + '+' + types);
     let query = this.repo
       .createQueryBuilder('recipe')
       .innerJoin('recipe.recipeIngredient', 'recipeIngredient')

@@ -25,18 +25,8 @@ export class AuthenticationController {
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
-    // if (registrationData.role) registrationData.role = 'user';
     return this.authenticationService.register(registrationData);
   }
-
-  // @HttpCode(200)
-  // @UseGuards(LocalAuthenticationGuard)
-  // @Post('log-in')
-  // async logIn(@Req() request: RequestWithUser) {
-  //   const user = request.user;
-  //   user.password = undefined;
-  //   return user;
-  // }
 
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
@@ -48,16 +38,13 @@ export class AuthenticationController {
       user.email,
       user.role,
     );
-    // response.setHeader('Access-Control-Allow-Credentials', 'true');
     console.log(this.configService.get('JWT_EXPIRATION_TIME'));
     response.cookie('authorization', cookie.token, {
       httpOnly: false,
       secure: false,
       maxAge: this.configService.get('JWT_EXPIRATION_TIME') * 100,
     });
-    //autorizations
-    // user.token = cookie;
-    user.password = undefined; //@exclude?
+    user.password = undefined;
     return response.send(user);
   }
 
@@ -74,11 +61,6 @@ export class AuthenticationController {
         secure: false,
       },
     );
-    // response.setHeader(
-    //   'Set-Cookie',
-    //   `authorization=nup`
-    // );
-    // return response.sendStatus(200);
     return response.send(user);
   }
 

@@ -16,6 +16,7 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
       .createQueryBuilder('ingredients')
       .orderBy('ingredients.name');
     return query.select(['ingredients']).getMany();
+    // return this.repo.find();
   }
 
   getALLIngredientswithoutOrder(): Promise<any> {
@@ -25,8 +26,15 @@ export class IngredientService extends TypeOrmCrudService<IngredientEntity> {
   }
 
   getIngredientByID(id: number): Promise<any> {
-    const x = this.repo.findOne({ id: id });
-    return x;
+    const query = this.repo
+    .createQueryBuilder('ingredients')
+    .andWhere('ingredients.recipeIngredient = :id', {
+      id: id,
+    });
+    return query.select(['ingredients']).getMany();
+
+    // const x = this.repo.findOne({ id: id });
+    // return x;
   }
 
   postIngredient(ingredient: IngredientEntity): Promise<any> {

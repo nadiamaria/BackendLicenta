@@ -14,10 +14,10 @@ export class RecipeIngredientEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   unit_mas: string;
 
-  @Column()
+  @Column({ nullable: false })
   cant_ingr: number;
 
   @Column({ nullable: false })

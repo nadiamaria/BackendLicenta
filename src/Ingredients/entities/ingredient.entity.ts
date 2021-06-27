@@ -15,7 +15,7 @@ export class IngredientEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 500, unique: true })
+  @Column('varchar', { length: 50, unique: true, nullable: false })
   name: string;
 
   @OneToMany(
@@ -23,4 +23,5 @@ export class IngredientEntity {
     (recipeIngredient) => recipeIngredient.ingredient,
   )
   recipeIngredient: RecipeIngredientEntity[];
+  
 }

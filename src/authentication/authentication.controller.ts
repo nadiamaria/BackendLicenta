@@ -36,6 +36,7 @@ export class AuthenticationController {
     const cookie = this.authenticationService.getCookieWithJwtToken(
       user.id,
       user.email,
+      user.name,
       user.role,
     );
     console.log(this.configService.get('JWT_EXPIRATION_TIME'));

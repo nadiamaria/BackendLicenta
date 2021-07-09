@@ -56,13 +56,13 @@ export class RecipeService extends TypeOrmCrudService<RecipeEntity> {
           .innerJoin('recipe_2.recipeIngredient', 'recipeIngredient_2')
           .innerJoin('recipeIngredient_2.ingredient', 'ingredient_2')
           .where(
-            'recipe_2.id = recipe.id AND ingredient_2.name IN (:...ingredients)',
+            'ingredient_2.name IN (:...ingredients)',
             {
               ingredients: filter,
             },
           )
           .groupBy('recipe_2.id')
-          .andHaving('COUNT(1) = :filter_length', {
+          .andHaving('COUNT(DISTINCT ingredient_2.name) = :filter_length', {
             filter_length: filter.length,
           })
           .getQuery();
